@@ -1,18 +1,19 @@
 package com.polaris.polaris;
 
 public class Movie {
-    private String title;
-    private String released;
-    private String rated;
-    private String genre;
-    private String plot;
-    private String rtScore;
-    private String imdbScore;
-    private String metaScore;
-    private String posterURL;
-    private int imdbId;
+    public String title;
+    public String released;
+    public String rated;
+    public String genre;
+    public String plot;
+    public String rtScore;
+    public String imdbScore;
+    public String metaScore;
+    public String posterURL;
+    public int imdbId;
 
     public Movie(String title, String year) {
-
+        this.title = title;
+        this.released = year;
     }
 }

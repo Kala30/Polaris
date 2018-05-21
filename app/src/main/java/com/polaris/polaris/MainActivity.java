@@ -26,6 +26,9 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        GetData getData = new GetData(this, "Title", "Year");
+        getData.execute();
     }
 
     @Override
