@@ -1,6 +1,5 @@
 package com.polaris.polaris;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -8,12 +7,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class MovieDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_movie_detail);
+
+        GetData getData = new GetData(this, "Title", "Year");
+        getData.execute();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -25,10 +28,7 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-    }
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-    public void startDetail(View view) {
-        Intent intent = new Intent(this, MovieDetailActivity.class);
-        startActivity(intent);
     }
 }

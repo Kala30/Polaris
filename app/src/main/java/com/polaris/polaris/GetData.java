@@ -2,6 +2,8 @@ package com.polaris.polaris;
 
 import android.content.Context;
 import android.os.AsyncTask;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -34,6 +36,7 @@ public class GetData extends AsyncTask<String, Void, Void> {
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
         //String url = "http://www.theimdbapi.org/api/find/movie?title=transformers&year=2007";
+        //String url = "http://www.theimdbapi.org/api/movie?movie_id=tt0076759";
         String url = "http://omdbapi.com/?i=tt3896198&apikey=72efb3e8";
 
         // Request a string response from the provided URL.
@@ -47,8 +50,13 @@ public class GetData extends AsyncTask<String, Void, Void> {
                         try {
                             result = new Movie(response.getString("Title"), response.getString("Released"));
                             result.plot = response.getString("Plot");
-                            TextView description = ((MainActivity)context).findViewById(R.id.description);
+                            result.imdbScore = response.getString("imdbRating");
+                            MovieDetailActivity activity = (MovieDetailActivity) context;
+                            TextView description = activity.findViewById(R.id.description);
                             description.setText(result.plot);
+                            CollapsingToolbarLayout toolbarLayout = activity.findViewById(R.id.toolbar_layout);
+                            Toolbar toolbar = activity.findViewById(R.id.toolbar);
+                            toolbarLayout.setTitle(result.title);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
