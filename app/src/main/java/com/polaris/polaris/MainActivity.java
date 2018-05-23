@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void startDetail(View view) {
         Intent intent = new Intent(this, MovieDetailActivity.class);
+        intent.putExtra("imdb_id", "tt3778644");
         startActivity(intent);
     }
 }

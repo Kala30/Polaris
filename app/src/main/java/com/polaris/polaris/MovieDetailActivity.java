@@ -1,5 +1,7 @@
 package com.polaris.polaris;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -14,8 +16,12 @@ public class MovieDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
 
-        GetData getData = new GetData(this, "Title", "Year");
-        getData.execute();
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String imdbId = extras.getString("imdb_id");
+            GetData getData = new GetData(this, imdbId);
+            getData.execute();
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -24,8 +30,9 @@ public class MovieDetailActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse("https://www.imdb.com/showtimes/title/" + getIntent().getExtras().get("imdb_id")));
+                startActivity(i);
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
