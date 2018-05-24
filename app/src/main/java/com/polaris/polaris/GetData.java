@@ -64,12 +64,17 @@ public class GetData extends AsyncTask<String, Void, Void> {
                             result.website = response.getString("Website");
 
                             JSONArray ratings = response.getJSONArray("Ratings");
-                            try { result.imdbScore = ratings.getJSONObject(0).getString("Value"); }
-                            catch (Exception e) { result.imdbScore = null; }
-                            try {result.rtScore = ratings.getJSONObject(1).getString("Value"); }
-                            catch (Exception e) { result.rtScore = null; }
-                            try { result.metaScore = ratings.getJSONObject(2).getString("Value"); }
-                            catch (Exception e) { result.metaScore = null; }
+                            String[] sources = new String[3];
+                            String[] values = new String[3];
+                            for (int i = 0; i < ratings.length(); i++) {
+                                JSONObject rating = ratings.getJSONObject(i);
+                                if (rating.getString("Source").equals("Internet Movie Database"))
+                                    result.imdbScore = rating.getString("Value");
+                                else if (rating.getString("Source").equals("Rotten Tomatoes"))
+                                    result.rtScore = rating.getString("Value");
+                                else if (rating.getString("Source").equals("Metacritic"))
+                                    result.metaScore = rating.getString("Value");
+                            }
 
                             final MovieDetailActivity activity = (MovieDetailActivity) context;
 
