@@ -16,6 +16,8 @@ public class Movie {
 
     public String website;
 
+    public Movie() { }
+
     public Movie(String title, String year) {
         this.title = title;
         this.released = year;

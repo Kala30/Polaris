@@ -54,7 +54,8 @@ public class GetData extends AsyncTask<String, Void, Void> {
                         // display response
                         //Log.d("Response", response.toString());
                         try {
-                            result = new Movie(response.getString("Title"), response.getString("Released"));
+                            result = new Movie();
+                            result.title = response.getString("Title");
                             result.plot = response.getString("Plot");
                             result.rated = response.getString("Rated");
                             result.posterURL = response.getString("Poster");
@@ -107,7 +108,7 @@ public class GetData extends AsyncTask<String, Void, Void> {
                             CollapsingToolbarLayout toolbarLayout = activity.findViewById(R.id.toolbar_layout);
                             toolbarLayout.setTitle(result.title);
 
-                            SetDrawable setDrawable = new SetDrawable(context, result.posterURL);
+                            SetDrawable setDrawable = new SetDrawable((ImageView)activity.findViewById(R.id.poster), result.posterURL, 2);
                             setDrawable.execute();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -128,41 +129,7 @@ public class GetData extends AsyncTask<String, Void, Void> {
         return null;
     }
 
-    class SetDrawable extends AsyncTask<Void, Void, Drawable> {
-        private Context context;
-        private String url;
 
-        public SetDrawable(Context context, String url) {
-            this.context = context;
-            this.url = url;
-        }
-
-        @Override
-        public Drawable doInBackground(Void... params) {
-            try {
-                InputStream is = (InputStream) new URL(url).getContent();
-                Drawable d = Drawable.createFromStream(is, "src name");
-
-                // Resize bitmap
-                Bitmap bm = ((BitmapDrawable)d).getBitmap();
-                Bitmap bitmapResized = Bitmap.createScaledBitmap(bm, bm.getWidth()*2, bm.getHeight()*2, false);
-
-                return new BitmapDrawable(context.getResources(), bitmapResized);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Drawable result) {
-            if (result != null) {
-                MovieDetailActivity activity = (MovieDetailActivity) context;
-                ((ImageView)activity.findViewById(R.id.poster)).setImageDrawable(result);
-            }
-        }
-
-    }
 
 
 
