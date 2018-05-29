@@ -21,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
@@ -80,8 +81,11 @@ public class GetListData extends AsyncTask<String, Void, Void> {
                                     final RelativeLayout clickableColumn = (RelativeLayout) inflater.inflate(R.layout.list_column, null);
                                     ImageView thumbnail = clickableColumn.findViewById(R.id.thumbnail_image);
 
-                                    SetDrawable setDrawable = new SetDrawable(thumbnail, "https://image.tmdb.org/t/p/w200" + currentMovie.getString("poster_path"));
-                                    setDrawable.execute();
+                                    //SetDrawable setDrawable = new SetDrawable(thumbnail, "https://image.tmdb.org/t/p/w200" + currentMovie.getString("poster_path"));
+                                    //setDrawable.execute();
+                                    Glide.with(context)
+                                            .load("https://image.tmdb.org/t/p/w200" + currentMovie.getString("poster_path"))
+                                            .into(thumbnail);
 
                                     SetImdbTag setImdbTag = new SetImdbTag((View)clickableColumn, currentMovie.getString("id"));
                                     setImdbTag.execute();

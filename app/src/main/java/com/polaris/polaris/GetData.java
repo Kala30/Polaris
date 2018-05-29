@@ -85,10 +85,10 @@ public class GetData extends AsyncTask<String, Void, Void> {
                             TextView ratingsView = activity.findViewById(R.id.ratings);
                             String ratingString = "";
                             if (result.imdbScore != null)
-                                ratingString += "Rotten Tomatoes: " + result.imdbScore + "\n";
-                            else if (result.rtScore != null)
+                                ratingString += "Rotten Tomatoes: " + result.rtScore + "\n";
+                            if (result.rtScore != null)
                                 ratingString += "IMDB: " + result.imdbScore + "\n";
-                            else if (result.metaScore != null)
+                            if (result.metaScore != null)
                                 ratingString += "Metacritic: " + result.metaScore;
 
                             ratingsView.setText(ratingString);

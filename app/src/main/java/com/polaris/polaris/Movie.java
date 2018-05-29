@@ -1,6 +1,7 @@
 package com.polaris.polaris;
 
-public class Movie {
+public class Movie implements java.io.Serializable{
+
     public String title;
     public String released;
     public String rated;
@@ -12,7 +13,7 @@ public class Movie {
     public String imdbScore;
     public String metaScore;
     public String posterURL;
-    public int imdbId;
+    public String imdbId;
 
     public String website;
 
