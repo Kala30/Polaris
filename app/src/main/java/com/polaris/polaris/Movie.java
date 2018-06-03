@@ -7,8 +7,10 @@ public class Movie implements java.io.Serializable{
     public String rated;
     public String genre;
     public String runtime;
+    public String cast;
 
     public String plot;
+    public String shortDesc;
     public String rtScore;
     public String imdbScore;
     public String metaScore;

@@ -1,8 +1,11 @@
 package com.polaris.polaris;
 
+        import android.app.Activity;
         import android.content.Context;
         import android.content.Intent;
         import android.os.AsyncTask;
+        import android.support.design.widget.Snackbar;
+        import android.support.v7.app.AlertDialog;
         import android.util.Log;
         import com.android.volley.Request;
         import com.android.volley.RequestQueue;
@@ -23,14 +26,22 @@ public class SearchData extends AsyncTask<String, Void, Void> {
 
     private Context context;
     private String url;
+    private String title;
 
     public SearchData(Context context, String title, String year) {
         this.context = context;
+        this.title = title;
         this.url = "http://omdbapi.com/?apikey=72efb3e8&type=movie&s=" + title + "&y=" + year;
     }
 
     @Override
     protected Void doInBackground(String... params) {
+
+        if (title.equals("")) {
+            Snackbar.make(((Activity)context).findViewById(R.id.main_layout), "No title", Snackbar.LENGTH_SHORT).show();
+            return null;
+        }
+
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -53,10 +64,16 @@ public class SearchData extends AsyncTask<String, Void, Void> {
 
                             Intent intent = new Intent(context, ListActivity.class);
                             intent.putExtra("list", results);
+                            intent.putExtra("title", title);
                             context.startActivity(intent);
 
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            AlertDialog dialog = new AlertDialog.Builder(context)
+                              .setTitle("Movie not found")
+                              .setNegativeButton("Ok", null)
+                              .create();
+                            dialog.show();
                         }
                     }
                 },

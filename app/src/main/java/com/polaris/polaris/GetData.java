@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,6 +21,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -42,6 +44,7 @@ public class GetData extends AsyncTask<String, Void, Void> {
 
     @Override
     protected Void doInBackground(String... params) {
+
         // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(context);
 
@@ -62,6 +65,7 @@ public class GetData extends AsyncTask<String, Void, Void> {
                             result.released = response.getString("Released").replaceFirst("^0+(?!$)", ""); // Remove leading zero
                             result.runtime = response.getString("Runtime");
                             result.genre = response.getString("Genre");
+                            result.cast = response.getString("Actors");
                             result.website = response.getString("Website");
 
                             JSONArray ratings = response.getJSONArray("Ratings");
@@ -79,6 +83,9 @@ public class GetData extends AsyncTask<String, Void, Void> {
 
                             final MovieDetailActivity activity = (MovieDetailActivity) context;
 
+                            TextView title = activity.findViewById(R.id.title);
+                            title.setText(result.title);
+
                             TextView info = activity.findViewById(R.id.info);
                             info.setText(result.rated + "\n" + result.released + "\n" + result.genre + "\n" + result.runtime);
 
@@ -87,7 +94,7 @@ public class GetData extends AsyncTask<String, Void, Void> {
                             if (result.imdbScore != null)
                                 ratingString += "Rotten Tomatoes: " + result.rtScore + "\n";
                             if (result.rtScore != null)
-                                ratingString += "IMDB: " + result.imdbScore + "\n";
+                                ratingString += "IMDb: " + result.imdbScore + "\n";
                             if (result.metaScore != null)
                                 ratingString += "Metacritic: " + result.metaScore;
 
@@ -95,6 +102,10 @@ public class GetData extends AsyncTask<String, Void, Void> {
 
                             TextView description = activity.findViewById(R.id.description);
                             description.setText(result.plot);
+
+                            TextView cast = activity.findViewById(R.id.cast);
+                            cast.setText(result.cast);
+
 
                             Button button = activity.findViewById(R.id.site_button);
                             button.setOnClickListener(new View.OnClickListener() {
@@ -108,10 +119,12 @@ public class GetData extends AsyncTask<String, Void, Void> {
                             CollapsingToolbarLayout toolbarLayout = activity.findViewById(R.id.toolbar_layout);
                             toolbarLayout.setTitle(result.title);
 
-                            SetDrawable setDrawable = new SetDrawable((ImageView)activity.findViewById(R.id.poster), result.posterURL, 2);
-                            setDrawable.execute();
+                            Glide.with(context)
+                                    .load(result.posterURL)
+                                    .into((ImageView)activity.findViewById(R.id.poster));
                         } catch (JSONException e) {
                             e.printStackTrace();
+                            Toast.makeText(context, "Error", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

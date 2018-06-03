@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -87,17 +88,19 @@ public class GetListData extends AsyncTask<String, Void, Void> {
                                             .load("https://image.tmdb.org/t/p/w200" + currentMovie.getString("poster_path"))
                                             .into(thumbnail);
 
-                                    SetImdbTag setImdbTag = new SetImdbTag((View)clickableColumn, currentMovie.getString("id"));
-                                    setImdbTag.execute();
+                                    clickableColumn.setTag(currentMovie.getString("id"));
+
+                                    //SetImdbTag setImdbTag = new SetImdbTag((View)clickableColumn, currentMovie.getString("id"));
+                                    //setImdbTag.execute();
 
                                     clickableColumn.setOnClickListener(new View.OnClickListener() {
                                         @Override
                                         public void onClick(View v) {
-                                            String imdbId = (String) v.getTag();
+                                            String tmdbId = (String) v.getTag();
                                             //Log.d("column onClick", "IMDB ID: " + imdbId);
-                                            Intent intent = new Intent(v.getContext(), MovieDetailActivity.class);
-                                            intent.putExtra("imdb_id", imdbId);
-                                            v.getContext().startActivity(intent);
+                                            //Toast.makeText(context, omdbId, Toast.LENGTH_SHORT).show();
+                                            StartDetailTmdb setImdbTag = new StartDetailTmdb(v, tmdbId);
+                                            setImdbTag.execute();
                                         }
                                     });
 
@@ -114,6 +117,12 @@ public class GetListData extends AsyncTask<String, Void, Void> {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Error.Response", "Error");
+                        //Dialog
+                        AlertDialog dialog = new AlertDialog.Builder(context)
+                          .setTitle("Network Error")
+                          .setNegativeButton("Ok", null)
+                          .create();
+                        dialog.show();
                     }
                 }
         );

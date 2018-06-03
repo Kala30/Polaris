@@ -29,6 +29,8 @@ public class ListActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             movieList = (ArrayList<Movie>) extras.get("list");
+            if (extras.get("title") != null)
+                setTitle((String)extras.get("title"));
         }
 
         ListView listView = findViewById(R.id.list);
@@ -58,10 +60,13 @@ public class ListActivity extends AppCompatActivity {
             }
             // Lookup view for data population
             TextView title = convertView.findViewById(R.id.text1);
-            TextView year = convertView.findViewById(R.id.text2);
+            TextView info = convertView.findViewById(R.id.text2);
+            TextView description = convertView.findViewById(R.id.text3);
+            
             // Populate the data into the template view using the data object
             title.setText(movie.title);
-            year.setText(movie.released);
+            info.setText(movie.released);
+            description.setText(movie.shortDesc);
             convertView.setTag(movie.imdbId);
             Glide.with(parent)
                     .load(movie.posterURL)

@@ -29,13 +29,24 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/text_margin"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@android:style/TextAppearance.Material.Title"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_margin" />
+                    android:layout_marginTop="4dp"
+                    android:layout_marginHorizontal="@dimen/text_margin" />
 
                 <TextView
                     android:id="@+id/ratings"
@@ -47,19 +58,77 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin" />
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop = "8dp"
+                    android:layout_marginBottom = "4dp"
+                    android:text="Synopsis"
+                    android:textAppearance="@android:style/TextAppearance.Material.Title"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal = "16dp"
+                    android:layout_marginTop = "4dp"
+                    android:layout_marginBottom = "8dp" />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="16dp"
+                    android:layout_marginTop = "8dp"
+                    android:layout_marginBottom = "4dp"
+                    android:text="Cast"
+                    android:textAppearance="@android:style/TextAppearance.Material.Title"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id = "@+id/cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal = "16dp"
+                    android:layout_marginTop = "4dp"
+                    android:layout_marginBottom = "8dp"/>
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
 
         <Button
             android:id="@+id/site_button"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/colorAccent"
             android:text="Visit"
-            style="?android:attr/borderlessButtonStyle" />
+            android:textColor="@color/colorAccent" />
 
     </LinearLayout>
 

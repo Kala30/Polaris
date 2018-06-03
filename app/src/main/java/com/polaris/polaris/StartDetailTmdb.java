@@ -1,5 +1,6 @@
 package com.polaris.polaris;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
@@ -15,12 +16,12 @@ import java.net.URL;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class SetImdbTag extends AsyncTask<String, Void, String>{
+public class StartDetailTmdb extends AsyncTask<String, Void, String>{
 
     private String tmdbId;
     private View view;
 
-    public SetImdbTag (View view, String tmdbId) {
+    public StartDetailTmdb (View view, String tmdbId) {
         this.view = view;
         this.tmdbId = tmdbId;
     }
@@ -55,7 +56,9 @@ public class SetImdbTag extends AsyncTask<String, Void, String>{
     protected void onPostExecute(String result) {
         //Log.d("SetImdbTag","IMDB ID: " + result);
         if (result != null) {
-            view.setTag(result);
+            Intent intent = new Intent(view.getContext(), MovieDetailActivity.class);
+            intent.putExtra("imdb_id", result);
+            view.getContext().startActivity(intent);
         }
     }
 }
