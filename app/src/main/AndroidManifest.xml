@@ -28,17 +28,13 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:label="Loading...">
-            <!--<meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.polaris.polaris.MainActivity" />-->
         </activity>
 
 
         <activity android:name=".ListActivity"
-            android:label="Search" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.polaris.polaris.MainActivity" />
+            android:parentActivityName=".MainActivity"
+            android:label="Search"
+            android:theme="@style/AppTheme">
         </activity>
     </application>
 

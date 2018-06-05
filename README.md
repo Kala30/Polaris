@@ -2,4 +2,7 @@
 Android app for movie information.
 Uses the [OMDb API](http://www.omdbapi.com/).
 
-![](Screenshots/Screenshot_1527114676.png)
+Developed by Grant Cai and Caleb Yun.
+
+
+![](Screenshots/Polaris.png)
