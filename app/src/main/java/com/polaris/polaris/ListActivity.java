@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 public class ListActivity extends AppCompatActivity {
 
     ArrayList<Movie> movieList;
-    ArrayAdapter<Movie> adapter;
+    MovieAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,15 @@ public class ListActivity extends AppCompatActivity {
         adapter.addAll(movieList);
         adapter.notifyDataSetChanged();
 
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String imdbId = (String) view.getTag();
+                Intent intent = new Intent(view.getContext(), MovieDetailActivity.class);
+                intent.putExtra("imdb_id", imdbId);
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     class MovieAdapter extends ArrayAdapter<Movie> {
@@ -57,6 +67,7 @@ public class ListActivity extends AppCompatActivity {
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.movie_list_item, parent, false);
+                //convertView = LayoutInflater.from(getContext()).inflate(android.R.layout.simple_list_item_1, parent, false);
             }
             // Lookup view for data population
             TextView title = convertView.findViewById(R.id.text1);
@@ -72,16 +83,6 @@ public class ListActivity extends AppCompatActivity {
                     .load(movie.posterURL)
                     .into((ImageView) convertView.findViewById(R.id.icon));
 
-
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String imdbId = (String) v.getTag();
-                    Intent intent = new Intent(v.getContext(), MovieDetailActivity.class);
-                    intent.putExtra("imdb_id", imdbId);
-                    v.getContext().startActivity(intent);
-                }
-            });
             // Return the completed view to render on screen
             return convertView;
         }
